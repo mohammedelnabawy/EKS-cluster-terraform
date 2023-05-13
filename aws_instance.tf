@@ -7,14 +7,14 @@ data "aws_secretsmanager_secret_version" "secret-version" {
 }
 
 resource "aws_instance" "bastion" {
-    ami = var.EC2_AMI
-    instance_type = var.EC2_TYPE
-    associate_public_ip_address = true
-    key_name = aws_key_pair.ec2.id
-    subnet_id = module.network.pub_sub_1_id
-    vpc_security_group_ids = [ aws_security_group.public-sec.id ]
+  ami                         = var.EC2_AMI
+  instance_type               = var.EC2_TYPE
+  associate_public_ip_address = true
+  key_name                    = aws_key_pair.ec2.id
+  subnet_id                   = module.network.pub_sub_1_id
+  vpc_security_group_ids      = [aws_security_group.public-sec.id]
 
-    provisioner "local-exec" {
+  provisioner "local-exec" {
     command = "echo '${self.public_ip}' > ./inventory"
   }
   user_data = <<-EOF
@@ -36,7 +36,7 @@ resource "aws_instance" "bastion" {
     Name = "bastion"
   }
 }
-            #   aws configure set aws_access_key_id '${jsondecode(data.aws_secretsmanager_secret_version.secret-version.secret_string)["access_key"]}' --profile=eks-creator
-            #   aws configure set aws_secret_access_key '${jsondecode(data.aws_secretsmanager_secret_version.secret-version.secret_string)["secret_key"]}' --profile=eks-creator
-            #   export AWS_PROFILE=eks-creator
+#   aws configure set aws_access_key_id '${jsondecode(data.aws_secretsmanager_secret_version.secret-version.secret_string)["access_key"]}' --profile=eks-creator
+#   aws configure set aws_secret_access_key '${jsondecode(data.aws_secretsmanager_secret_version.secret-version.secret_string)["secret_key"]}' --profile=eks-creator
+#   export AWS_PROFILE=eks-creator
 #               aws configure set default.region '${var.REGION}' --profile=eks-creator

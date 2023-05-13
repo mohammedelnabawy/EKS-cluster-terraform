@@ -5,8 +5,8 @@ resource "aws_eks_cluster" "eks-cluster" {
   vpc_config {
     subnet_ids = [module.network.priv_sub_1_id, module.network.priv_sub_2_id, module.network.priv_sub_3_id]
   }
-    depends_on = [
-        aws_iam_role_policy_attachment.example-AmazonEKSClusterPolicy,
+  depends_on = [
+    aws_iam_role_policy_attachment.example-AmazonEKSClusterPolicy,
   ]
 
 }
@@ -24,7 +24,7 @@ resource "aws_eks_node_group" "node-group" {
   cluster_name    = aws_eks_cluster.eks-cluster.name
   node_group_name = "EKS-node-group"
   node_role_arn   = aws_iam_role.node-role.arn
-  subnet_ids = [module.network.priv_sub_1_id, module.network.priv_sub_2_id, module.network.priv_sub_3_id]
+  subnet_ids      = [module.network.priv_sub_1_id, module.network.priv_sub_2_id, module.network.priv_sub_3_id]
 
   scaling_config {
     desired_size = 3
@@ -35,7 +35,7 @@ resource "aws_eks_node_group" "node-group" {
   update_config {
     max_unavailable = 1
   }
-  
+
   depends_on = [
     aws_iam_role_policy_attachment.example-AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.example-AmazonEKS_CNI_Policy,

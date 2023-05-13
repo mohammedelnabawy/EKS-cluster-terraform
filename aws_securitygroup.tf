@@ -4,11 +4,11 @@ resource "aws_security_group" "public-sec" {
   vpc_id      = module.network.vpc_id
 
   ingress {
-    description      = "ssh from outside"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    description = "ssh from outside"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
